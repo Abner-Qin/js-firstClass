@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>闭包</title>
+</head>
+<body>
+	<div id="app">闭包就是能够读取其他函数内部变量的函数。<br>
+	由于在Javascript语言中，只有函数内部的子函数才能读取局部变量，因此可以把闭包简单理解成“定义在一个函数内部的函数”。所以，在本质上，闭包就是将函数内部和函数外部连接起来的一座桥梁。 <br>
+	闭包可以用在许多地方。它的最大用处有两个，一个是前面提到的可以读取函数内部的变量，另一个就是让这些变量的值始终保持在内存中。</div>
+	<script>
+	//1. 正常的函数调用
+// function a(){
+//   var num=10;
+//   alert(num)
+// }
+// a();//10
+
+// function a(){
+//   var num=10;
+//   return num;
+// }
+// console.log(a())//10
+
+
+
+//2. 经典的闭包调用（这里如果外面直接调用b（）控制台则会报错b is not defined，因为在作用域外b方法未定义）
+// function a(){
+//   var num=10;
+//   function b(){
+//     alert(num)
+//   }
+//   return b
+// }
+// var c=a();
+// c()//10
+ 
+// 3.闭包会保存里面的数据，不建议滥用闭包，循环两次结果不同,另外也不会被js的垃圾回收机制删除。
+// var b=function(){
+//   var num=10;
+//   var a=function(){
+//   num++;
+//   alert(num)
+// }
+//   return a;
+// }
+// var c=b();
+// c()//11
+// c()//12
+
+// 4.函数和变量都可以预编译
+// var num=10;
+// var func=function(){
+//   alert(num);//如果内部没有定义num则去外部找num为10。如果内部定义了num为20，则第一个alert报underfined,因为alert是在内部定义之前弹出的，这里的预编译只是分配了空间但是还没赋值，下面的alert弹出20，函数内部的变量作用域就是在内部（作用域就是先找局部再找全局）
+//   var num=20;
+//   alert(num)
+// }
+// func()
+
+// 5.注意匿名函数不可以预编译(相当于上个例子中的第一个alert变量num，不同的是这里会直接报错)
+// var func=function(){
+// 	alert(123)
+// }
+// var foo=function(){
+// 	func();//如果去掉这一句则下面的func函数会被重新执行弹出334
+// 	var func=function(){
+// 		alert(334)
+// 	}
+// 	func();
+// }
+// foo();
+
+
+// 6.这个例子是先执行b方法，打印出0，然后在外面a重新被赋值，弹出4
+// function b(){
+// 	var a=0;//这里如果把var去掉则a就为全局变量，后面的var是在重新赋值之后才执行的b方法，所以值会被全局的a所覆盖，所以两次打印都为0但是如果把顺序变为b（） var a=4;则打印的结果还是0，4，一样的道理，如果先执行b方法，则直接弹出零没有问题，然后后面重新赋值为4，则又发生了一次覆盖，弹出的值即为4
+// 	alert(a)
+// }
+// var a=4;
+// b();//0
+// alert(a)//4
+
+</script>
+</body>
+</html>

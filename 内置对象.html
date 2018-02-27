@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>内置对象</title>
+</head>
+<body>
+	<script>
+		// 给内置对象添加一个方法
+		String.prototype.addstring=function(){
+			return this+"here"
+		}
+		alert("haha".addstring())//hahahere 内置的方法如substring()
+	</script>
+</body>
+</html>

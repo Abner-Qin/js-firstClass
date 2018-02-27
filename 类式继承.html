@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>类式继承</title>
+</head>
+<body>
+	<p>类式继承是在子类型构造函数的内部调用超类型的构造函数。
+严格的类式继承并不是很常见，一般都是组合着用</p>
+<p>call()的用法：调用一个对象的一个方法，以另一个对象替换当前对象。<br>
+
+  call([thisObj[,arg1[, arg2[, [,.argN]]]]])  </p>
+  <p> call与aplly的异同：  <br>
+    1,第一个参数this都一样,指当前对象  <br>
+    2,第二个参数不一样：call的是一个个的参数列表；func.call(func1,var1,var2,var3)  <br>	
+apply的是一个数组（arguments也可以） func.apply(func1,[var1,var2,var3])。 </p>
+	<script>
+		// 借用构造函数
+		 // function Parent(age){
+   //        this.name = ['mike','jack','smith'];
+   //        this.age = age;
+   //    }
+  
+   //    function Child(age){
+   //       Parent.call(this,age);
+   //    }
+   //   var test = new Child(21);
+   //   alert(test.age);//21
+   //   alert(test.name);//mike,jack,smith
+   //   test.name.push('bill');
+   //   alert(test.name);//mike,jack,smith,bill
+     
+   //   组合继承(组合式继承是比较常用的一种继承方法，其背后的思路是 使用原型链实现对原型属性和方法的继承，而通过借用构造函数来实现对实例属性的继承。这样，既通过在原型上定义方法实现了函数复用，又保证每个实例都有它自己的属性。但组合继承的超类型在使用过程中会被调用两次；一次是创建子类型的时候，另一次是在子类型构造函数的内部)
+     // function Parent(age){
+     //     this.name = ['mike','jack','smith'];
+     //     this.age = age;
+     // }
+     // Parent.prototype.run = function () {
+     //     return this.name  + ' are both' + this.age;
+     // };
+     // function Child(age){
+     //     Parent.call(this,age);//对象冒充，给超类型传参 第二次调用
+     // }
+     // Child.prototype = new Parent();//原型链继承 第一次调用
+     // var test = new Child(21);//写new Parent(21)也行
+     // alert(test.run());//mike,jack,smith are both21
+     
+     // call , apply实现继承
+       function  Person(name,age,love){  
+        this.name=name;  
+        this.age=age;  
+        this.love=love;  
+        this.say=function say(){  
+            alert("姓名："+name+"年龄"+age);  
+        }  
+    }  
+    //call方式  
+    function student(name,age){  
+        Person.call(this,name,age);  
+    }  
+
+    //apply方式  
+    function teacher(name,love){  
+        Person.apply(this,[name,love]);  
+        //Person.apply(this,arguments); //跟上句一样的效果，arguments  
+    }    
+    var per=new Person("张三",25); //姓名：张三年龄25
+    per.say();  
+    var stu=new student("李四",18);//姓名：李四年龄18
+    stu.say();  
+    var tea=new teacher("王武",16);//姓名：王武年龄16
+    tea.say();  
+	</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>面向对象</title>
+</head>
+<body>
+	<p>首先万物皆对象，类可以说是像现实世界中相似的对象可以按照一定的标准来分组，例如猫类，鸟类等对于人类来说也是一个大类，而具体到某一个人则是类中的一个对象，这个人会有他的性别，年龄，动作等，就相当于对象本身所拥有的的属性，方法等，相应的一堆公共的对象又可以提取出来类。这就是类和对象的一个关系</p>
+<script>
+	// 1.创建一个对象的方式
+// var obj=new Object();//创建一个空的对象
+// // 对象上面可以放一些属性name名字，age年龄，sayHi打招呼的方式
+// obj.name="tom";
+// obj.age=10;
+// obj.sayHi=function(){
+// 	// 这里的this表示当前作用域下的对象obj如果this在外面则是指的windows对象
+// alert("我叫"+this.name+"，今年"+this.age+"岁了，"+"你好")
+// }
+// obj.sayHi();//我叫tom，今年10岁了，你好
+// 这是创建了一个tom的对象如果向创建一堆对象则可以使用工厂模式的方式来创建
+
+
+// 2.工厂模式
+// function CreateObj(name,age){
+// 	var obj=new Object();
+// 	obj.name=name;
+// 	obj.age=age;
+// 	obj.sayHi=function(){
+// 	// 这里的this表示当前作用域下的对象obj如果this在外面则是指的windows对象
+// alert("我叫"+this.name+"，今年"+this.age+"岁了，"+"你好")
+// }
+// return obj//要想在外部用到obj则需要返回出去
+// }
+// // 实例出来的两个对象tom,jerry
+// var A1=CreateObj('tom',10)
+// var A2=CreateObj('jerry',10)
+// A1.sayHi();//我叫tom，今年10岁了，你好
+// A2.sayHi();//我叫jerry，今年10岁了，你好
+// alert(A1 instanceof Object)//true 所有的Object对象都是true
+// alert(A2 instanceof Object)//true
+// alert(A1 instanceof CreateObj)//false
+// 检测类型时两个都为对象不能很好的分清谁为谁的实例 
+ 
+
+// 3.构造函数
+function Cat(name,age){//创建一个对象，所有构造函数的对象都是Object
+	this.name=name;
+	this.age=age;
+	this.sayHi=function(){
+	// 这里的this表示当前作用域下的对象obj如果this在外面则是指的windows对象
+alert("我叫"+this.name+"，今年"+this.age+"岁了，"+"你好")
+}
+}
+var A1=new Cat('tom',10)//从这里开始实例化对象上面都是实例前的设置
+var A2=new Cat('jerry',10)
+A1.sayHi();//我叫tom，今年10岁了，你好
+A2.sayHi();//我叫jerry，今年10岁了，你好
+alert(A1.sayHi==A2.sayHi)//false因为这两个function引用的地址是不同的如果想引向同一个对象则需要使用原型的方法。
+alert(A1 instanceof Object)//true
+alert(A2 instanceof Object)//true
+alert(A1 instanceof Cat)//true
+// 这里再实例化一个person
+function Person(name,age){
+this.name=name;
+this.age=age;
+}
+var Person1=new Person('张三','18')
+alert(Person1 instanceof Person)//true
+alert(A2 instanceof Person)//false 如果是Cat就是true了，这里可以自行判断A2是Cat的实例化对象而非Person的
+
+// 构造函数和工厂模式的区别
+// 1.构造函数没有new Object();但是其实后台已经自己new了
+// 2.构造函数不需要加return，它会自动返回对象。
+// 3.构造函数规范，第一个字母大写，使用时必须通过new关键字的方式使用
+</script>	
+</body>
+</html>

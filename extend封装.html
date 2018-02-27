@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>extend封装</title>
+</head>
+<body>
+	<p>这个函数的功能基本都是实现对象的拷贝功能，即将一个对象的所有属属性拷贝到另外一个对象上去，这个函数使用的频率也很高，如果我们要将一个类的所有方法拷贝到另外方法上去，使用这个方法很方便的。</p>
+	<p style="font-size:20px;color:red;">什么是封装呢？</p>
+	<p>我的理解就是 把一个功能单独做成一个组件，就像做饺子，以前做饺子必须自己先用面粉做饺子皮，再做饺子馅，然后再手工包饺子，但是现在人们发明了自动包饺子机器，虽然机器里面的每一步骤和你自己包饺子是一样的，但是实际上你现在需要做的就只有一件事，就是放原料。这边机器就是封装好的插件，而原料就是你要传的参数</p>
+	<p style="font-size:20px;color:green;">为什么要把js功能封装成插件呢？</p>
+	<p>1、便于代码复用<br>
+
+　　2、避免各个相同功能组件的干扰，可能会有作用域的一些问题吧<br>
+
+　　3、便于维护，同时利于项目积累<br>
+
+　　</p>
+	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+	<script>
+		// 在封装的时候会把js代码放到一个自执行函数里面，这样可以防止变量冲突。
+		(function(){
+			// 创建一个构造函数
+  var demo = function(options){
+  	// 我们一个插件一般有一些必选参数或者可选参数，在我看来可选参数不过就是在插件里面给了默认值罢了。我们传的参数会覆盖插件中的默认参数，可以用$.extend({})覆盖
+    this.options = $.extend({
+      "x" : "1",
+      "y" : "2",
+      "z" : "3"
+    },options);
+    this.init();
+  };
+  demo.prototype.init = function(){
+    alert("x是"+this.options.x+" y是"+this.options.y+" z是"+this.options.z);
+  };
+  // 把这个函数暴露给外部，以便全局调用
+  window.demo = demo;
+}());
+
+new demo({
+  "x" :"5",
+  "y" :"4"
+});
+
+
+
+
+
+
+		var res1={
+	percent_yyj1: [
+		{percent:"43%"},
+		{percent:"92%"}
+	],
+	percent_yhj1: [
+		{percent:"5.56%"},
+		{percent:"99%"}
+	]
+};
+var res2={
+	percent_yyj2: [
+		{percent:"43%"},
+		{percent:"92%"}
+	],
+	percent_yhj2: [
+		{percent:"5.56%"},
+		{percent:"99%"}
+	]
+};
+var res3=$.extend(res1, res2);
+console.log(res3)
+var jsonstr="[{'name':'a','value':1},{'name':'b','value':2}]";
+var jsonarray = eval('('+jsonstr+')');
+  
+var arr  =
+     {
+         "name" : 12,
+         "value" : 23
+     }
+jsonarray.push(arr);
+console.log(jsonarray)
+	</script>
+
+</body>
+</html>

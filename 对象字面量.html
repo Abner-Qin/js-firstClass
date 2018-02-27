@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象字面量</title>
+</head>
+<body>
+	<script>
+// 		function Cat(){}//空的构造函数
+// 		// 通过字面量的方式去创建原型对象{} new Object
+// 			Cat.prototype={
+// 				name:"tom",
+// 				age: 10,
+// 				sayHi:function(){//原型方法
+		
+// 	// 这里的this表示当前作用域下的对象obj如果this在外面则是指的windows对象
+// alert("我叫"+this.name+"，今年"+this.age+"岁了，"+"你好")
+// 								}
+// 			}
+				
+// var A1=new Cat()//从这里开始实例化对象上面都是实例前的设置
+// A1.sayHi();//我叫tom，今年10岁了，你好
+
+// alert(A1.constructor==Object)//true它的指针会指向Object不会指向Cat实例（构造函数以及普通的构造原型属性等都是默认指向Cat的）如果想指针指向Cat实例则可以在Cat.prototype对象例直接写constructor:Cat就可以强制指向Cat了
+
+
+ 
+// 完善字面量
+function Cat(name,age){
+	this.name=name;
+	this.age=age;
+	}
+	Cat.prototype={
+		constructor:Cat,//强制指向Cat
+			sayHi:function(){//原型方法
+	// 这里的this表示当前作用域下的对象obj如果this在外面则是指的windows对象
+alert("我叫"+this.name+"，今年"+this.age+"岁了，"+"你好")
+								}
+			}
+var A1=new Cat('tom',10)//从这里开始实例化对象上面都是实例前的设置
+A1.sayHi();//我叫tom，今年10岁了，你好
+
+		
+	</script>
+
+</body>
+</html>

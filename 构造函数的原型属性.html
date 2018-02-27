@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>原型</title>
+</head>
+<body>
+	<p>JS的构造函数都有一个prototype属性，指向它的原型对象（其实就是个普通的JS对象）。<br>
+	通过同一个构造函数创建出来的对象，共享同一个原型对象。<br>
+	原型对象初始化的时候是空的，我们可以在里面自定义任何属性和方法，这些方法和属性都将被该构造函数所创建的对象继承。如果原型发生了变化，那么所有实例都会跟着改变。</p>
+	<p>原型模式的执行流程：<br>
+	1.先查找构造函数实例里的属性或方法，如果有，立刻返回<br>
+	2.如果构造函数实例里没有，则去他的原型对象里找，如果有，立刻返回<br>
+	简单来说就是就近原则，先去实例化对象new Cat()里找，如果没有再去原型对象Cat.prototype里面找，如果两个地方都有命名则采用就近的方式取实例化对象的name值即tom
+	</p>
+	<script>
+		//原型： prototype属性 原型的方法和属性都是共享的
+// 		function Cat(){//空的构造函数
+// 			Cat.prototype.name="jerry";//原型属性
+// 			Cat.prototype.age=10;
+// 			Cat.prototype.sayHi=function(){//原型方法
+// 	// 这里的this表示当前作用域下的对象obj如果this在外面则是指的windows对象
+// alert("我叫"+this.name+"，今年"+this.age+"岁了，"+"你好")
+// }
+// 	}
+// var A1=new Cat()//从这里开始实例化对象上面都是实例前的设置
+// var A2=new Cat()//这里就不需要再像构造函数一样传值了，因为在构造函数的原型属性里已经声明过值了
+// // A1.name="tom"//如果加上这一句，那么下面的A1.sayHi()则弹出的就是我叫tom，今年10岁了，你好，因为就近原则取值，先找实例里的name值，如果没有才找原型里的，这里的A1的name被重新赋值了，所以直接返回被重新赋值的对象name值，
+// A1.sayHi();//我叫jerry，今年10岁了，你好
+// A2.sayHi();//我叫jerry，今年10岁了，你好
+// alert(A1.sayHi==A2.sayHi)//true两个方法指向同一个地址
+// 完善的原型模式（这里的name和age是动态改变的而sayHi方法的属性是共享的）
+function Cat(name,age){//空的构造函数
+			this.name=name;//原型属性
+			this.age=age;		
+
+	}
+	// 写在Cat里面和外面都一样的最后弹true
+	Cat.prototype.sayHi=function(){//原型方法
+	// 这里的this表示当前作用域下的对象obj如果this在外面则是指的windows对象
+alert("我叫"+this.name+"，今年"+this.age+"岁了，"+"你好")
+}
+
+var A1=new Cat('tom',10)//从这里开始实例化对象上面都是实例前的设置
+var A2=new Cat('jerry',10)
+A1.sayHi();//我叫jerry，今年10岁了，你好
+A2.sayHi();//我叫jerry，今年10岁了，你好
+alert(A1.sayHi==A2.sayHi)//true两个方法指向同一个地址
+	</script>
+</body>
+</html>

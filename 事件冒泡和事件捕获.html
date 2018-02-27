@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件冒泡和事件捕获</title>
+</head>
+<body>
+	<p>他们是描述事件触发时序问题的术语。事件捕获指的是从document到触发事件的那个节点，即自上而下的去触发事件。相反的，事件冒泡是自下而上的去触发事件。绑定事件方法的第三个参数，就是控制事件触发顺序是否为事件捕获。true,事件捕获；false,事件冒泡。默认false,即事件冒泡。Jquery的e.stopPropagation会阻止冒泡，意思就是到我为止，我的上级事件就不要触发了。</p>
+
+<p>事件分为三个阶段：   事件捕获 -->  事件目标 -->  事件冒泡</p>
+<p></p>
+	<div id="parent">上级事件
+　　<div id="child" class="child">下级事件</div>
+	</div>
+-------------------------------------------------------------------------------
+
+
+	<!-- 实例html部分 -->
+	　<ul>
+            <li>item1</li>
+            <li>item2</li>
+            <li>item3</li>
+            <li>item4</li>
+            <li>item5</li>
+            <li>item6</li>
+        </ul>
+        <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+	<script>
+		// 先child，然后parent。事件的触发顺序自内向外，这就是事件冒泡。
+		 // document.getElementById("parent").addEventListener("click",function(e){
+   //              alert("parent事件被触发，"+this.id);//"parent事件被触发，parent
+   //          })
+   //          document.getElementById("child").addEventListener("click",function(e){
+   //              alert("child事件被触发，"+this.id)//先弹出"child事件被触发，child之后弹出"parent事件被触发，parent
+   //          })
+  		// 现在改变第三个参数的值为true，先parent,然后child。事件触发顺序变更为自外向内，这就是事件捕获。
+   // document.getElementById("parent").addEventListener("click",function(e){
+   //              alert("parent事件被触发，"+e.target.id);//"parent事件被触发，parent
+   //          },true)
+   //          document.getElementById("child").addEventListener("click",function(e){
+   //              alert("child事件被触发，"+e.target.id)//先弹出"parent事件被触发，parent之后弹出"child事件被触发，child
+   //          },true)
+   // 下面来一个实例看一下（利用事件冒泡来实现鼠标放到li上对应的li背景变灰。）
+   // 利用事件冒泡处理动态元素事件绑定的方法，专业术语叫事件委托。
+   　　$("ul").on("mouseover",function(e){
+                $(e.target).css("background-color","#ddd").siblings().css("background-color","white");
+                console.log($(e.target))//选中的li
+            })
+   // 正常写法是：
+   // 　$("li").on("mouseover",function(){
+   //              $(this).css("background-color","#ddd").siblings().css("background-color","white");
+   //          })
+   //          两者区别：
+   //         1. 前者少了一个遍历所有li节点的操作，所以在性能上肯定是更优的。
+   //         2.如果我们在绑定事件完成后，页面又动态的加载了一些元素如$("<li>item7</li>").appendTo("ul");这时候，第二种方案，由于绑定事件的时候item7还不存在，所以为了效果，我们还要给它再绑定一次事件。而利用冒泡方案由于是给ul绑的事件……但有一点第一种方法点击左侧也能全部选中ul
+	</script>
+</body>
+</html>
